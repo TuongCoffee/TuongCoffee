@@ -1,32 +1,43 @@
 # TuongCoffee's repository
 
+![License](https://img.shields.io/badge/License-GPLv3-blue.svg)
+![JavaScript](https://img.shields.io/badge/Main%20Language-JavaScript-yellow)
+![Learning](https://img.shields.io/badge/Status-Learning-informational)
+![Beginner](https://img.shields.io/badge/Level-Beginner-success)
+
 ![*Stray ending scene*](/stuffs/images/stray_ending_scene)
 
-## About *myself*
+## About myself
 
-Hi! im TuongCoffee. You can call me Tuong. Im just a beginner programmer born in 2014 and from Vietnam.
+Hi! I'm TuongCoffee. You can call me Tuong.  
+I'm a beginner programmer, born in 2014, and from Vietnam.
 
 ### How did I learn about programming?
 
 It's a ***long*** story.
 
-So.. umm.. for real, I **learn about coding** from like when I was **11 or 12.**  
-When I was 11 or 12, I want to *hacks* in Roblox <sub>( lol )</sub>, so i started researching *"hOw To HaCk iN rObLoX"* and I found **Happymod** - a platform that contains *safe-modded* apps and games ( *NOT SPONSORED* ). I search for Roblox and I install it but it's ***sucks*** ( i have experience from downloading apks to avoid viruses ). So **I began searching more and more** until I found Executors, like *Delta*, *Fluxus*, *Krnl* that **can run scripts in Roblox *client.*** I run some scripts I found on *Youtube and Google* and it is very fun! Btw I expiloting not hacking, I mean, **I expilot to make others laugh not ruin othes experience with the game.**
+So… umm… for real, I **started learning coding** when I was **around 11 or 12**.  
+At that time, I wanted to experiment with scripts in Roblox <sub>( lol )</sub>, so I started researching things like *"how Roblox scripts work"*.  
 
-After this long journey with expilot. I started thinking, *"Why not make my own script?"*, so I learn about scripting, programming, coding or something. And **I began to fell in love with it!** ( when I started learn about coding, it is Luau - a scripting language from Roblox ) But my scripts **sucks** and I used Chat-GPT to write codes. And I stopped learing because I dont have conditions. That's it. <sub>The end.</sub> Thanks for readi- just kidding, it's not ended.
+I discovered platforms like **Happymod** — a place that contains *safe-modded* apps and games (*NOT SPONSORED*).  
+I tried Roblox mods, but they weren’t very good, so I kept searching until I found script executors like *Delta*, *Fluxus*, and *Krnl* that could run scripts inside the Roblox client.
 
-### Fav things
+Running scripts I found on *YouTube* and *Google* was really fun.  
+Also, I want to clarify that I was **experimenting with scripts**, not hacking. I only used them to make others laugh, not to ruin anyone’s experience.
 
-I loves some colors like *blue sky*, *blue*, *black*, *purple*, etc.  
-I LOVES ICECREAM.  
-I loves coding like i said up there.  
-Idk what to say more.
+After that journey, I started thinking:  
+*"Why not make my own script?"*
 
-### Fav films and games
+That’s when I began learning scripting and programming — and I **fell in love with it**.  
+The first language I learned was **Luau**, a scripting language used in Roblox.
 
-My fav film is *Interstellar* and more! I cant list all of it because I watch it without knowing the name of the film.  
-My fav game is *Stray* because it make me **cry** at the ending so much 😭.
+At first, my scripts weren’t very good, and I sometimes used **ChatGPT** to help write code.  
+Eventually, I stopped learning for a while due to personal limitations.
 
+That’s it. <sub>The end.</sub>  
+Thanks for readi— just kidding, it’s not over yet.
+
+---
 
 ## About this repository
 
@@ -36,45 +47,46 @@ Just for fun :)
 
 #### 1. Learning to script
 
-This repository was created for learning scripting using multiple programming languages, mainly `.js` (JavaScript), with the help of *ChatGPT*.  
-I don’t currently have a teacher to guide me, so I use **Chat-GPT** to learn, practice, and improve my skils step by step.
+This repository was created to learn scripting using multiple programming languages, mainly `.js` (JavaScript), with the help of **ChatGPT**.  
+I don’t currently have a teacher to guide me, so I use ChatGPT to learn, practice, and improve my **skills** step by step.
 
 #### 2. Making stuff
 
-This repository also store some of my stuff so others can use it too!  
-Remember to credit if u want to make somthing that's contain my stuff.
+This repository also stores some of my work so others can use it too.  
+Please give **credit** if you reuse any part of my work.
 
-#### 3. For testing script
+#### 3. For testing scripts
 
-In here, it will have some list, array, etc to test your code.  
-Like, you want to make a script thats gonna take some data from the Internet. This repository is for you.
+This repository includes lists, arrays, and other data used for testing scripts.  
+For example, if you want to write a script that fetches or processes data from the Internet, this repository can be useful.
 
+---
 
 ### What’s in this repository?
 
-Contains alot of scripts created throughout my *scripting learning process*.  
-The code here represents my ongoing journey of *learning*, *experimenting*, and *expanding* my understanding of scripting over the days.
+This repository contains a lot of scripts created throughout my *learning journey*.  
+The code reflects my process of *learning*, *experimenting*, and *improving* my understanding of scripting over time.
+
+---
 
 ### License
 
-Each file includes experiments, practice problems, or ideas developed along the way.  
-You will find both simple tests and more advanced logic explorations. The code may not always be clean or optimized, as it reflects learning in progress.
+This project is licensed under the **GNU General Public License v3.0**.  
+See the `LICENSE` file for more details.
 
-You are allowed to use the code **without asking for permission**, but **credit is required** if you publish your work.  
-You may use the code *without credit* only if your work is not made public.
+You are allowed to use the code **without asking for permission**, but **credit is required** if your work is made public.  
+If your project is private or not published, you may use the code without credit.
 
-**Public repository — free to use for learning, testing, and experimentation.  
-Licensed under _GNU General Public License v3.0_**.  
-So, feel free to use my code for testing! :)
+---
 
 ### Others
 
 > [!IMPORTANT]
 > This repository is not fully completed.
-> 
-> I’m *Vietnamese*, so I may make spelling or grammar mistakes.  
-> If you notice any issues, feel free to let me know so I can fix them ;)
-> 
-> I also use some **Chat-GPT** for these `README.md` file.
+>
+> I’m Vietnamese, so there may be spelling or grammar mistakes.  
+> If you notice any issues, feel free to let me know so I can fix them :)
+>
+> Some parts of this `README.md` were written with the help of **ChatGPT**.
 
-![*Stray ending scene 2*](/stuffs/images/stray_ending_scene2)
+![*Stray ending scene 2*](/stuffs/images/stray_ending_scene2)# TuongCoffee's repository
