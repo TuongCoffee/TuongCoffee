@@ -5,7 +5,7 @@
 ![Learning](https://img.shields.io/badge/Status-Learning-informational)
 ![Beginner](https://img.shields.io/badge/Level-Beginner-success)
 
-![*Stray ending scene*](/stuffs/images/stray_ending_scene)
+![*Stray ending scene*](/stuffs/images/stray_ending_scene.png)
 
 ## About myself
 
@@ -89,4 +89,4 @@ If your project is private or not published, you may use the code without credit
 >
 > Some parts of this `README.md` were written with the help of **ChatGPT**.
 
-![*Stray ending scene 2*](/stuffs/images/stray_ending_scene2)
+![*Stray ending scene 2*](/stuffs/images/stray_ending_scene2.png)
