@@ -47,7 +47,7 @@ It has only a few gigabytes of free storage.
 
 ---
 
-## About this repository
+## About my repository
 
 ### Why did I make this repository?
 
@@ -56,7 +56,7 @@ Just for fun :)
 #### 1. Learning to script
 
 This repository was created to learn scripting using multiple programming languages, mainly `.ts` or `.js` (JvaScript or TypeScript), with the help of **ChatGPT**.  
-I don’t currently have a teacher to guide me, so I use ChatGPT to learn, practice, and improve my **skills** step by step.
+I don’t currently have a teacher to guide me, so I use ChatGPT to **learn**, **practice**, and improve my **skills** step by step.
 
 #### 2. Making stuff
 
@@ -90,7 +90,7 @@ If your project is private or not published, you may use the code without credit
 ### Others
 
 > [!IMPORTANT]
-> This repository is not fully completed.
+> My repository is not fully completed.
 >
 > I’m Vietnamese, so there may be spelling or grammar mistakes.  
 > If you notice any issues, feel free to let me know so I can fix them :)
