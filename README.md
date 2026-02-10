@@ -1,37 +1,63 @@
-# Hello! I'm TuongCoffee!
+# Hello! I'm TuongCoffee 👋
 
-Hi! I'm TuongCoffee. You can call me Tuong.  
-I'm a beginner programmer, born in 2014, and from Vietnam.
+Hi! I'm TuongCoffee, but you can call me **Tuong**.  
+I'm a beginner programmer from **Vietnam**, currently learning and making scripts step by step.
 
-### How did I learn about programming?
+---
 
-It's a ***long*** story.
+## Learning journey
 
-So… umm… for real, I **started learning coding** when I was **around 11 or 12**.  
-At that time, I wanted to experiment with scripts in Roblox <sub>( lol )</sub>, so I started researching things like *"how Roblox scripts work"*.  
+### Back from the beginning
 
-I discovered platforms like **Happymod** — a place that contains *safe-modded* apps and games (*NOT SPONSORED*).  
-I tried Roblox mods, but they weren’t very good, so I kept searching until I found script executors like *Delta*, *Fluxus*, and *Krnl* that could run scripts inside the Roblox client.
+This story starts with hacking. Literally.
 
-Running scripts I found on *YouTube* and *Google* was really fun.  
-Also, I want to clarify that I was **experimenting with scripts**, not hacking. I only used them to make others laugh, not to ruin anyone’s experience.
+I started learning programming when I was around **11–12 years old**, mainly because I wanted to use **Roblox scripts**.  
+At first, I wasn’t interested in programming itself — I just wanted to **hack**.
 
-After that journey, I started thinking:  
-*"Why not make my own script?"*
+I searched things like *“Roblox hack scripts”* and found executors such as **Delta**, **Fluxus**, and **Krnl**, which allowed scripts to run inside the Roblox client. I used scripts from YouTube and Google, experimented with them, and tried different things.
 
-That’s when I began learning scripting and programming — and I **fell in love with it**.  
-The first language I learned was **Luau**, a scripting language used in Roblox.
+That phase was fun, but it didn’t last.
 
-At first, my scripts weren’t very good, and I sometimes used **ChatGPT** to help write code.  
-Eventually, I stopped learning for a while due to personal limitations.
+After a while, I started thinking:
 
-That’s it. <sub>The end.</sub>  
-Thanks for readi— just kidding, it’s not over yet.
+> *“Instead of using other people’s scripts… why don’t I make my own?”*
 
-### Stuffs
+That was the turning point.
 
-I currently use Termux as my main terminal.
-I code with Acode, a code editor for Android.
+### From hacking to scripting
 
-My device is a low-end Samsung Galaxy A11.
-It has only a few gigabytes of free storage.
+Once I tried writing my own scripts, everything changed.
+
+I started learning **Luau**, the scripting language used in Roblox. At first, my scripts were messy, simple, and sometimes broken. I used **ChatGPT** to understand syntax and ideas, but most of the learning came from trial and error — like Geometry Dash, lol.
+
+Somewhere along the way, I **fell in love with scripting**.
+
+I almost instantly stopped using hacks and executors, not because someone told me to, but because **writing my own code was way more fun and interesting**.  
+I started caring more about *how things worked* than *what advantages I could get*.
+
+That’s when hacking stopped being the goal.
+
+---
+
+## Today
+
+I did pause my learning for a while due to personal limitations, but the interest never disappeared.  
+Now, I’m back — learning programming properly, exploring new tools, and building projects at my own pace.
+
+This repository represents that journey.
+
+## Development Environment
+
+Terminal: Termux (Android)  
+Code editor: Acode  
+Device: Samsung Galaxy A11 *(low-end device, limited storage, so I prefer lightweight tools)*
+
+## Notes
+
+My repository (repositories) reflects my learning process.  
+Some projects may be experimental or unfinished.  
+The goal is understanding, not perfection.
+
+## End
+
+Thanks for reading!
