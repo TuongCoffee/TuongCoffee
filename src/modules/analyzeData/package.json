@@ -1,19 +1,24 @@
 {
   "name": "analyze-data",
   "version": "1.0.0",
-  "description": "",
-  "homepage": "https://github.com/TuongCoffee/TuongCoffee-s-repo#readme",
+  "description": "A module for analyzing data (seems useless)",
+  "keywords": [
+    "module",
+    "analyze",
+    "data"
+  ],
+  "homepage": "https://github.com/TuongCoffee/TuongCoffee#readme",
   "bugs": {
-    "url": "https://github.com/TuongCoffee/TuongCoffee-s-repo/issues"
+    "url": "https://github.com/TuongCoffee/TuongCoffee/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/TuongCoffee/TuongCoffee-s-repo.git"
+    "url": "git+https://github.com/TuongCoffee/TuongCoffee.git"
   },
   "license": "GPL-3.0-or-later",
-  "author": "TuongCoffee",
+  "author": "TuongCoffee (https://github.com/TuongCoffee)",
   "type": "module",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   }

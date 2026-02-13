@@ -1,18 +1,25 @@
-function randomInt(min: number, max: number): number {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    
+// main function
+function randomNumber(min: number, max: number, decimal: number = 0): number {
     // guard
-    if (min > max) {
-        throw new Error("min must be <= max");
-    }
-    
     if (!Number.isFinite(min) || !Number.isFinite(max)) {
         throw new TypeError("min and max must be finite numbers");
     }
+    if (!Number.isInteger(decimal)) {
+        throw new RangeError("decimal must be an integer");
+    }
+    if (min > max) {
+        throw new RangeError("min must be <= max");
+    }
     
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+    // main script
+    const scale = 10 ** decimal;
+    
+    const result =
+        Math.floor(Math.random() * (max * scale - min * scale + 1)) +
+        min * scale;
+        
+    return result / scale;
+    
 }
 
-// export funtion
-export default randomInt;
+export default randomNumber;

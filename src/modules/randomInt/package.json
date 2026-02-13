@@ -1,6 +1,6 @@
 {
-  "name": "random-int",
-  "version": "1.0.0",
+  "name": "random-number",
+  "version": "1.2.0",
   "description": "A module for gernerating random number",
   "keywords": [
     "module",
