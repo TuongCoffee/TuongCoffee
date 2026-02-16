@@ -1,0 +1,25 @@
+'{
+  "name": "readline-v2",
+  "version": "1.0.0",
+  "description": "A freshier and more better than readline (still use readline).",
+  "keywords": [
+    "module",
+    "readline",
+    "better"
+  ],
+  "homepage": "https://github.com/TuongCoffee/TuongCoffee#readme",
+  "bugs": {
+    "url": "https://github.com/TuongCoffee/TuongCoffee/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TuongCoffee/TuongCoffee.git"
+  },
+  "license": "GPL-3.0-or-later",
+  "author": "TuongCoffee (https://github.com/TuongCoffee)",
+  "type": "module",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
