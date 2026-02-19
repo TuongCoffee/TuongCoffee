@@ -32,7 +32,7 @@ I started learning **Luau**, the scripting language used in Roblox. At first, my
 
 Somewhere along the way, I **fell in love with scripting**.
 
-I almost instantly stopped using hacks and executors, not because someone told me to, but because **writing my own code was far more interesting, fun and rewarding**.  
+I almost instantly stopped using hacks and executors, not because someone told me to, but because **writing my own code was far more interesting, fun, and rewarding**.  
 I started caring more about *how things worked* than *what advantages I could gain*.
 
 That’s when hacking stopped being the goal.
@@ -41,10 +41,10 @@ That’s when hacking stopped being the goal.
 
 ## Today
 
-I did paused my learning a few times (each time was about half a year) due to personal limitations, but the interest never disappeared.  
-Now, I’m back — learning programming properly, exploring new tools, and building projects at my own pace.  
+I paused my learning a few times (each time was about half a year) since I was still young and financially dependent on my family.  
+Now, I’m back. Learning programming properly, exploring new tools, and building projects at my own pace.  
 
-Currently, I mainly work with **JavaScript (.js)** and **TypeScript (.ts)**.
+Currently, I mainly work with **JavaScript (.js)** or **TypeScript (.ts)**.
 
 This repository represents that journey.
 
@@ -67,6 +67,13 @@ The goal is understanding, not perfection.
 > If you notice any issues, feel free to let me know.
 >
 > Some parts of this `README.md` were written with the help of **ChatGPT**.
+
+## About me (if you're interested in me)
+
+Fav song: "Colors" by Jake Llaguno.  
+Fav movie: Interstellar (that's not all).  
+Fav food: m e a t .  
+Fan of: OSC (mainly BFDI).
 
 ## End
 
