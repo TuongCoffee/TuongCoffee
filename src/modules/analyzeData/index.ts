@@ -16,85 +16,166 @@ export const DEBUG = {
     }
 } as const;
 
-// Interfaces cho Type Safety
-interface AnalyzeOption {
+//===== types =====//
+
+export interface AnalyzeOption {
     min?: number;
     mode?: MODE;
     output_type?: OUTPUT_TYPE;
 }
 
-interface AnalyzeResult {
+export interface AnalyzeResult {
     inputs: {
-        input: any[];
-        option: AnalyzeOption;
+        input: number[];
+        option: Required<Omit<AnalyzeOption, "min">> & { min?: number };
     };
     outputs: {
-        validCount: { count: number; valid: number[] };
-        invalidCount: { count: number; invalid: any[] };
+        validCount: {
+            count: number;
+            valid: number[];
+        };
+        invalidCount: {
+            count: number;
+            invalid: number[];
+        };
         sum: number;
         average: number | null;
     };
 }
 
-const DEFAULT_OPTION: Required<AnalyzeOption> = {
-    min: undefined as any,
-    mode: MODE.normal,
-    output_type: OUTPUT_TYPE.return
+type ReturnOption = AnalyzeOption & {
+    output_type?: OUTPUT_TYPE.return;
 };
 
-// main function
-export function analyzeData(input: any[], option: AnalyzeOption = {}): AnalyzeResult | string | void {
-    // validate input
-    if (!Array.isArray(input)) return DEBUG.invalid.input;
+type ConsoleOption = AnalyzeOption & {
+    output_type: OUTPUT_TYPE.console;
+};
 
-    // validate option
-    if (typeof option !== "object" || option === null || Array.isArray(option)) {
+//===== default option =====//
+
+const DEFAULT_OPTION = {
+    mode: MODE.normal,
+    output_type: OUTPUT_TYPE.return
+} as const;
+
+//===== overload =====//
+
+export function analyzeData(
+    input: number[],
+    option?: ReturnOption
+): AnalyzeResult | string;
+
+export function analyzeData(
+    input: number[],
+    option: ConsoleOption
+): void | string;
+
+//========== main function ==========//
+export function analyzeData(
+    input: number[],
+    option: AnalyzeOption = {}
+): AnalyzeResult | string | void {
+    //===== validate input =====//
+
+    if (!Array.isArray(input)) {
+        return DEBUG.invalid.input;
+    }
+
+    //===== validate option =====//
+
+    if (
+        typeof option !== "object" ||
+        option === null ||
+        Array.isArray(option)
+    ) {
         return DEBUG.invalid.option;
     }
 
-    // merge user option with defaults
-    const finalOption: Required<AnalyzeOption> = { ...DEFAULT_OPTION, ...option };
-
-    // validate values
-    if (finalOption.min !== undefined && (typeof finalOption.min !== "number" || Number.isNaN(finalOption.min))) {
-        return DEBUG.invalid.option;
-    }
+    const finalOption = {
+        ...DEFAULT_OPTION,
+        ...option
+    };
 
     const { min, mode, output_type } = finalOption;
 
-    const data = {
-        validCount: { count: 0, valid: [] as number[] },
-        invalidCount: { count: 0, invalid: [] as any[] },
+    //===== runtime enum validation =====//
+
+    if (mode !== MODE.normal && mode !== MODE.strict) {
+        return DEBUG.invalid.option;
+    }
+
+    if (
+        output_type !== OUTPUT_TYPE.return &&
+        output_type !== OUTPUT_TYPE.console
+    ) {
+        return DEBUG.invalid.option;
+    }
+
+    if (min !== undefined && (typeof min !== "number" || Number.isNaN(min))) {
+        return DEBUG.invalid.option;
+    }
+
+    //===== result container =====//
+
+    const resultData = {
+        validCount: {
+            count: 0,
+            valid: [] as number[]
+        },
+        invalidCount: {
+            count: 0,
+            invalid: [] as number[]
+        },
         sum: 0,
         average: null as number | null
     };
 
-    for (const item of input) {
-        const isNumber = typeof item === "number" && !Number.isNaN(item);
-        const isAboveMin = min === undefined || (isNumber && item >= min);
+    //===== analyze loop =====//
 
-        if (!isNumber || !isAboveMin) {
+    for (const item of input) {
+        const isValidNumber = typeof item === "number" && !Number.isNaN(item);
+
+        const passMin = min === undefined || (isValidNumber && item >= min);
+
+        if (!isValidNumber || !passMin) {
             if (mode === MODE.strict) {
-                data.invalidCount.count++;
-                data.invalidCount.invalid.push(item);
+                resultData.invalidCount.count++;
+                resultData.invalidCount.invalid.push(item);
             }
+
             continue;
         }
 
-        data.validCount.count++;
-        data.validCount.valid.push(item);
-        data.sum += item;
+        resultData.validCount.count++;
+        resultData.validCount.valid.push(item);
+        resultData.sum += item;
     }
 
-    data.average = data.validCount.count > 0 ? data.sum / data.validCount.count : null;
+    //===== compute average =====//
+
+    if (resultData.validCount.count > 0) {
+        resultData.average = resultData.sum / resultData.validCount.count;
+    }
 
     const result: AnalyzeResult = {
-        inputs: { input, option: finalOption },
-        outputs: data
+        inputs: {
+            input,
+            option: {
+                min,
+                mode,
+                output_type
+            }
+        },
+        outputs: resultData
     };
 
+    //===== output handling =====///<
+
     if (output_type === OUTPUT_TYPE.console) {
-        console.dir(result, { depth: null, colors: true });
+        console.dir(result, {
+            depth: null,
+            colors: true
+        });
         return;
     }
 
