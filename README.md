@@ -61,8 +61,6 @@ Some projects may be experimental or unfinished.
 The goal is understanding, not perfection.
 
 > [!IMPORTANT]
-> This repository is not fully completed.
->
 > I’m Vietnamese, so there may be spelling or grammar mistakes.  
 > If you notice any issues, feel free to let me know.
 >
