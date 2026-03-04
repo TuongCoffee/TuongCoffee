@@ -43,10 +43,10 @@ You are free to use, modify, and distribute the code under the terms of the GPL.
 ## Others
 
 > [!IMPORTANT]
-> This repository is not fully completed.
->
 > I’m Vietnamese, so there may be spelling or grammar mistakes.  
 > If you notice any issues, feel free to let me know.
+>
+> I also use ChatGPT to fix codes.
 >
 > Some parts of this `README.md` were written with the help of **ChatGPT**.
 
