@@ -1,6 +1,6 @@
 # Hello! I'm TuongCoffee 👋
 
-Hi! I'm TuongCoffee, but you can call me **Tuong**.  
+Hi! I'm TuongCoffee, but you can call me **Coffee**.  
 I'm a beginner programmer from **Vietnam**, currently learning and building scripts step by step.
 
 ---
@@ -65,13 +65,6 @@ The goal is understanding, not perfection.
 > If you notice any issues, feel free to let me know.
 >
 > Some parts of this `README.md` were written with the help of **ChatGPT**.
-
-## About me (if you're interested in me)
-
-Fav song: "Colors" by Jake Llaguno.  
-Fav movie: Interstellar (that's not all).  
-Fav food: m e a t .  
-Fan of: OSC (mainly BFDI).
 
 ## End
 
