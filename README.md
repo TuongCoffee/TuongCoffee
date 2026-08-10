@@ -44,7 +44,7 @@ That’s when hacking stopped being the goal.
 I paused my learning a few times (each time was about half a year) since I was still young and financially dependent on my family.  
 Now, I’m back. Learning programming properly, exploring new tools, and building projects at my own pace.  
 
-Currently, I mainly work with **JavaScript (.js)** or **TypeScript (.ts)**.
+Currently, I mainly work with many languages (different languages at different time based on my own like).
 
 This repository represents that journey.
 
