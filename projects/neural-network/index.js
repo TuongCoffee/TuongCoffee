@@ -132,7 +132,7 @@ class NeuralNetwork {
 			process.exit(0);
 		});
 
-		for (let i = 0; interation === -1 || i < iteration; i++) {
+		for (let i = 0; iteration === -1 || i < iteration; i++) {
 			for (const { x, y } of this.data) {
 				const layersOutput = this.forward(x);
 				const output = layersOutput.at(-1);
