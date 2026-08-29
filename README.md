@@ -51,7 +51,7 @@ This repository represents that journey.
 ## Development Environment
 
 Terminal: Termux (Android)  
-Code editor: Acode  
+Code editor: Nano  
 Device: Samsung Galaxy A11 *(low-end device with limited storage, so I prefer lightweight tools)*
 
 ## Notes
