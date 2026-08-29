@@ -1,4 +1,4 @@
-// /storage/FC5B-E609/documents/neural-network.js
+// /projects/neural-network/index.js
 class NeuralNetwork {
 	constructor(layerSizes, bitSize) {
 		if (!Array.isArray(layerSizes)) throw new TypeError('Invalid input type. Expected Array.isArray(layerSizes), got !Array.isArray(layerSizes)');
@@ -125,10 +125,14 @@ class NeuralNetwork {
 		this.data = flattenedData;
 	}
 
-	train(iteration, learningRate = 0.5) {
+	async train(iteration, learningRate = 0.5) {
 		if (!this.data) throw new Error('Cannot read property of undefined (reading this.data)');
 
-		for (let i = 0; i < iteration; i++) {
+		process.on('SIGINT', () => {
+			process.exit(0);
+		});
+
+		for (let i = 0; interation === -1 || i < iteration; i++) {
 			for (const { x, y } of this.data) {
 				const layersOutput = this.forward(x);
 				const output = layersOutput.at(-1);
@@ -174,6 +178,8 @@ class NeuralNetwork {
 					currentDeltas = newDeltas;
 				}
 			}
+
+			await new Promise(resolve => setImmediate(resolve));
 		}
 	}
 }
