@@ -1,9 +1,6 @@
 # TuongCoffee's Repository
 
 ![License](https://img.shields.io/badge/License-GPLv3-blue.svg)
-![TypeScript](https://img.shields.io/badge/Main%20Language-Undefined-blue)
-![Learning](https://img.shields.io/badge/Status-Discontinued-informational)
-![Beginner](https://img.shields.io/badge/Level-Beginner-success)
 
 ![Stray ending scene](/stuffs/images/stray_ending_scene.png)
 
