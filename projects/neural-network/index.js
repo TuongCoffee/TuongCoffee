@@ -194,7 +194,7 @@ class NeuralNetwork {
 	async train(iteration, learningRate = 0.05, debug = false) {
 		if (!this.data) throw new Error('Cannot use train(). No data detected');
 		if (iteration < -1) throw new RangeError(`Invalid iteration. Expected i >= -1, got ${iteration}`);
-		if (iteration != true && iteration != false) throw new TypeError('Invalid input. Debug needs to be either == false or == true');
+		if (debug != true && debug != false) throw new TypeError('Invalid input. Debug needs to be either == false or == true');
 
 		if (iteration == 0) return;
 
