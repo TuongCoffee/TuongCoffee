@@ -1,4 +1,19 @@
 // /projects/neural-network/index.js
+const { execSync } = require('child_process');
+
+const getTerminalCols = () => {
+	try {
+		const [rows, cols] = execSync('stty size', { stdio: ['inherit', 'pipe', 'pipe'] })
+			.toString()
+			.trim()
+			.split(' ')
+			.map(Number);
+		return cols;
+	} catch {
+		return 0;
+	}
+}
+
 class NeuralNetwork {
 	constructor(layerSizes, bitSize) {
 		if (!Array.isArray(layerSizes)) throw new TypeError('Invalid input type. Expected Array.isArray(layerSizes), got !Array.isArray(layerSizes)');
@@ -34,21 +49,56 @@ class NeuralNetwork {
 		}
 	}
 
-	sigmoid(x) {
-		return 1 / (1 + Math.exp(-x));
-	}
-	sigmoidDerivative(x) {
-		return x * (1 - x);
+	static chunk(arr, size) {
+		const result = [];
+		for (let i = 0; i < arr.length; i += size) {
+			result.push(arr.slice(i, i + size));
+		}
+
+		return result;
 	}
 
-	isBinaryArray(arr) {
+	static isBinaryArray(arr) {
 		return Array.isArray(arr) && arr.length > 0 && arr.every(v => v === 0 || v === 1);
 	}
 
-	forward(input) {
-		if (!this.isBinaryArray(input)) throw new TypeError('Invalid input. Expected an array of 0/1 values.');
-		if (input.length !== this.layerSizes[0]) throw new RangeError(`Invalid array length. Expected input.length === ${this.layerSizes[0]}, got ${input.length}`);
+	static stringToBin(str, bitSize) {
+		return str.split('').map(s =>
+			s.charCodeAt(0).toString(2).padStart(bitSize, '0').split('').map(Number)
+		);
+	}
 
+	static numberToBin(num, bitSize) {
+		return num.toString(2).padStart(bitSize, '0').split('').map(Number);
+	}
+
+	static binToNumber(bin) {
+		return parseInt(bin.join(''), 2);
+	}
+
+	static binToString(bin) {
+		return bin.map(b =>
+			String.fromCharCode(this.binToNumber(b))
+		).join('');
+	}
+
+	static toBin(input, bitSize, maxLength) {
+		if (typeof input === 'string') {
+			let size = 0;
+			for (const char of input) {
+				size += char.charCodeAt(0).toString(2).length;
+			}
+			if (size > maxLength) throw new RangeError(`Invalid string length. Expected size <= ${maxLength}, got ${size}`);
+
+			return this.stringToBin(input.padEnd(maxLength / 8, '\0'), bitSize);
+		}
+		if (typeof input === 'number') return this.numberToBin(input, bitSize);
+		if (Array.isArray(input)) return input;
+
+		throw new TypeError(`Unsupported type: ${input}`);
+	}
+
+	#forward(input) {
 		let previousLayerOutput = input;
 		let layersOutput = [input];
 
@@ -62,7 +112,7 @@ class NeuralNetwork {
 					sum += this.weights[i][j][k] * previousLayerOutput[k];
 				}
 
-				results.push(this.sigmoid(sum));
+				results.push(Math.tanh(sum));
 			}
 
 			previousLayerOutput = results;
@@ -72,11 +122,13 @@ class NeuralNetwork {
 		return layersOutput;
 	}
 
-	predict(input) {
-		input = input.flat();
+	predict(input, outputType = 0) {
+		input = input.flatMap(i => this.constructor.toBin(i, this.bitSize, this.layerSizes[0]).flat());
 
-		if (!this.isBinaryArray(input)) throw new TypeError('Invalid input. Expected an array of 0/1 values.');
+		if (!this.constructor.isBinaryArray(input)) throw new TypeError('Invalid input. Expected an array of 0/1 values.');
 		if (input.length !== this.layerSizes[0]) throw new RangeError(`Invalid array length. Expected input.length === ${this.layerSizes[0]}, got ${input.length}`);
+
+		input = input.map(v => (v === 0 ? -1 : 1));
 
 		let previousLayerOutput = input;
 
@@ -90,13 +142,17 @@ class NeuralNetwork {
 					sum += this.weights[i][j][k] * previousLayerOutput[k];
 				}
 
-				results.push(this.sigmoid(sum));
+				results.push(Math.tanh(sum));
 			}
 
 			previousLayerOutput = results;
 		}
 
-		return previousLayerOutput.map(v => (v < 0.5 ? 0 : 1));
+		if (outputType === 'debug') return previousLayerOutput;
+		if (outputType === 'binary') return previousLayerOutput.map(v => (v > 0 ? 1 : 0));
+		if (outputType === 'number') return this.constructor.binToNumber(previousLayerOutput);
+		if (outputType === 'string') return this.constructor.binToString(this.constructor.chunk(previousLayerOutput.map(v => (v > 0 ? 1 : 0)), this.bitSize)).replace(/\0+$/, '');
+		throw new TypeError(`Unsupported output type:x ${outputType}`);
 	}
 
 	setData(data) {
@@ -106,35 +162,51 @@ class NeuralNetwork {
 		const flattenedData = [];
 
 		for (let i = 0; i < data.length; i++) {
-			const { x, y } = data[i];
+			let { x, y } = data[i];
+			x = x.flatMap(item => this.constructor.toBin(item, this.bitSize, this.layerSizes[0]));
+			y = y.flatMap(item => this.constructor.toBin(item, this.bitSize, this.layerSizes.at(-1)));
+
 			if (!Array.isArray(x) || !Array.isArray(y)) throw new TypeError('Invalid input type. Expected Array.isArray(x) and Array.isArray(y).');
 
 			for (const sub of x) {
-				if (!this.isBinaryArray(sub)) throw new TypeError('Invalid input. Expected every sub-array of x to be binary.');
+				if (!this.constructor.isBinaryArray(sub)) throw new TypeError('Invalid input. Expected every sub-array of x to be binary.');
 				if (sub.length !== this.bitSize) throw new RangeError(`Invalid array length. Expected sub.length === ${this.bitSize}, got ${sub.length}`);
 			}
 
 			for (const sub of y) {
-				if (!this.isBinaryArray(sub)) throw new TypeError('Invalid input. Expected every sub-array of y to be binary.');
+				if (!this.constructor.isBinaryArray(sub)) throw new TypeError('Invalid input. Expected every sub-array of y to be binary.');
 				if (sub.length !== this.bitSize) throw new RangeError(`Invalid array length. Expected sub.length === ${this.bitSize}, got ${sub.length}`);
 			}
 
-			flattenedData.push({ x: x.flat(), y: y.flat() });
+			flattenedData.push({
+				x: x.flat().map(v => (
+					v === 0 ? -1 : 1
+				)),
+				y: y.flat().map(v => (
+					v === 0 ? -1 : 1
+				))
+			});
 		}
 
 		this.data = flattenedData;
 	}
 
-	async train(iteration, learningRate = 0.5) {
-		if (!this.data) throw new Error('Cannot read property of undefined (reading this.data)');
+	async train(iteration, learningRate = 0.05, debug = false) {
+		if (!this.data) throw new Error('Cannot use train(). No data detected');
+		if (iteration < -1) throw new RangeError(`Invalid iteration. Expected i >= -1, got ${iteration}`);
+		if (iteration != true && iteration != false) throw new TypeError('Invalid input. Debug needs to be either == false or == true');
 
-		process.on('SIGINT', () => {
-			process.exit(0);
-		});
+		if (iteration == 0) return;
+
+		let startTime;
+		if (debug) startTime = Date.now();
 
 		for (let i = 0; iteration === -1 || i < iteration; i++) {
+			let totalError = 0;
+			let errorCount = 0;
+
 			for (const { x, y } of this.data) {
-				const layersOutput = this.forward(x);
+				const layersOutput = this.#forward(x);
 				const output = layersOutput.at(-1);
 
 				const lastGapIndex = this.weights.length - 1;
@@ -143,7 +215,12 @@ class NeuralNetwork {
 
 				for (let j = 0; j < output.length; j++) {
 					const error = y[j] - output[j];
-					const delta = error * this.sigmoidDerivative(output[j]);
+					if (debug) {
+						totalError += Math.abs(error);
+						errorCount++;
+					}
+
+					const delta = error * (1 - (output[j]) * (output[j]));
 					deltas.push(delta);
 
 					for (let k = 0; k < this.weights[lastGapIndex][j].length; k++) {
@@ -165,7 +242,7 @@ class NeuralNetwork {
 							error += currentDeltas[k] * this.weights[gapIndex + 1][k][j];
 						}
 
-						const delta = error * this.sigmoidDerivative(afterLayer[j]);
+						const delta = error * (1 - (afterLayer[j]) * (afterLayer[j]));
 						newDeltas.push(delta);
 
 						const inputLayer = layersOutput[gapIndex];
@@ -179,9 +256,54 @@ class NeuralNetwork {
 				}
 			}
 
-			await new Promise(resolve => setImmediate(resolve));
+			if (debug) {
+				const timeElapsed = (Date.now() - startTime) / 1000;
+				const itPerSec = (i + 1) / timeElapsed;
+
+				const logs = [
+					`training | i: ${i + 1}/${iteration === -1 ? '∞' : iteration} `+
+					`| err: ${totalError.toFixed(3)}/${errorCount} (${(totalError / errorCount).toFixed(3)}) ` +
+					`| ${timeElapsed}ms ${itPerSec.toFixed(3)}it/s`,
+
+					`i: ${i + 1}/${iteration === -1 ? '∞' : iteration}` +
+					`| err: ${totalError.toFixed(2)}/${errorCount} (${(totalError / errorCount).toFixed(2)}) ` +
+					`| ${timeElapsed}ms ${itPerSec.toFixed(2)}it/s`,
+
+					`i: ${i + 1}/${iteration === -1 ? '∞' : iteration}` +
+					`| err: ${totalError.toFixed(1)}/${errorCount} (${(totalError / errorCount).toFixed(1)}) ` +
+					`| ${timeElapsed / 1000}s ${itPerSec.toFixed(1)}it/s`,
+
+					`i: ${i + 1}/${iteration === -1 ? '∞' : iteration}` +
+					`| err: ${(totalError / errorCount).toFixed(2)} ` +
+					`| ${timeElapsed / 1000}s ${itPerSec.toFixed(1)}it/s`,
+
+					`${i + 1}/${iteration === -1 ? '∞' : iteration}` +
+					`| ${(totalError / errorCount).toFixed(1)} ` +
+					`| ${timeElapsed / 1000}s ${itPerSec.toFixed(0)}it/s`,
+
+					`${i + 1}/${iteration === -1 ? '∞' : iteration}` +
+					`| ${(totalError / errorCount).toFixed(1)} ` +
+					`| ${itPerSec.toFixed(0)}it/s`,
+
+					`${i + 1}/${iteration === -1 ? '∞' : iteration}` +
+					`| ${(totalError / errorCount).toFixed(1)}`,
+
+					`${(totalError / errorCount).toFixed(1)}`,
+				]
+
+				const cols = getTerminalCols();
+				const line = logs.find(c => c.length <= cols) ?? '';
+				process.stdout.write(`\r\x1b[K${line}`);
+			}
 		}
 	}
 }
 
-module.exports = { NeuralNetwork };
+const outputType = Object.freeze({
+	debug: 'debug',
+	binary: 'binary',
+	number: 'number',
+	string: 'string'
+});
+
+module.exports = { NeuralNetwork, outputType };
