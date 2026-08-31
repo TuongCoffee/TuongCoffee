@@ -20,19 +20,19 @@ This repository also stores some of my work so others can use it if they find it
 
 ### 3. Testing and experimenting
 
-Some files and data here are used for testing scripts and experimenting with different ideas.  
+Some files and data here are used for testing scripts and experimenting with different ideas.
 It’s part of my learning process.
 
 ---
 
 ## What’s in this repository?
 
-This repository contains various scripts created throughout my *learning journey*.  
+This repository contains various scripts created throughout my *learning journey*.
 The code reflects my process of *learning*, *experimenting*, and gradually *improving* my understanding of scripting.
 
 ## License
 
-This project is licensed under the **GNU General Public License v3.0**.  
+This repository is licensed under the **GNU General Public License v3.0**.
 See the `LICENSE` file for details.
 
 You are free to use, modify, and distribute the code under the terms of the GPL.
@@ -40,14 +40,11 @@ You are free to use, modify, and distribute the code under the terms of the GPL.
 ## Others
 
 > [!IMPORTANT]
-> I’m Vietnamese, so there may be spelling or grammar mistakes.  
+> I’m Vietnamese, so there may be spelling or grammar mistakes.
 > If you notice any issues, feel free to let me know.
 >
 > I also use ChatGPT to fix codes.
 >
 > Some parts of this `README.md` were written with the help of **ChatGPT**.
-
-> [!IMPORTANT]
-> Repository discontinued.
 
 ![Stray ending scene 2](/stuffs/images/stray_ending_scene2.png)
