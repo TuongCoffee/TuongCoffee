@@ -25,6 +25,7 @@ class NeuralNetwork {
 		this.weights = [];
 		this.biases = [];
 		this.itemBits = itemBits;
+		this.stopRequested = false;
 
 		for (let i = 1; i < layerSizes.length; i++) {
 			const beforeLayerSize = layerSizes[i - 1];
@@ -36,8 +37,9 @@ class NeuralNetwork {
 			for (let j = 0; j < afterLayerSize; j++) {
 				const weightGroup = [];
 
+				const scale = Math.sqrt(1 / beforeLayerSize);
 				for (let k = 0; k < beforeLayerSize; k++) {
-					weightGroup.push(Math.random() - 0.5);
+					weightGroup.push((Math.random() * 2 - 1) * scale);
 				}
 
 				gapWeights.push(weightGroup);
@@ -204,12 +206,18 @@ class NeuralNetwork {
 		this.data = flattenedData;
 	}
 
+	stop() {
+		this.stopRequested = true;
+	}
+
 	async train(iteration, learningRate = 0.05, debug = false) {
 		if (!this.data) throw new Error('Cannot use train(). No data detected');
 		if (iteration < -1) throw new RangeError(`Invalid iteration. Expected i >= -1, got ${iteration}`);
 		if (debug != true && debug != false) throw new TypeError('Invalid input. Debug needs to be either == false or == true');
 
 		if (iteration == 0) return;
+
+		this.stopRequested = false;
 
 		let startTime;
 		if (debug) startTime = Date.now();
@@ -252,16 +260,19 @@ class NeuralNetwork {
 
 			const cols = getTerminalCols();
 			const line = logs.find(c => c.length <= cols) ?? '';
-			process.stdout.write(`\r\x1b[K${line}`);
+			process.stdout.write('\x1b[s\x1b[1A\x1b[G\x1b[K' + line + '\x1b[u');
 
 			await new Promise(resolve => setImmediate(resolve));
 		};
 
+		outer:
 		for (let i = 0; iteration === -1 || i < iteration; i++) {
 			let totalError = 0;
 			let errorCount = 0;
 
 			for (const { x, y } of this.data) {
+				if (this.stopRequested) break outer;
+
 				const layersOutput = this.#forward(x);
 				const output = layersOutput.at(-1);
 
