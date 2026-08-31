@@ -267,6 +267,12 @@ class NeuralNetwork {
 
 		outer:
 		for (let i = 0; iteration === -1 || i < iteration; i++) {
+			const shuffledData = this.data;
+			for (let i = shuffledData.length - 1; i > 0; i--) {
+				const j = Math.floor(Math.random() * (i + 1));
+				[shuffledData[i], shuffledData[j]] = [shuffledData[j], shuffledData[i]];
+			}
+
 			let totalError = 0;
 			let errorCount = 0;
 
