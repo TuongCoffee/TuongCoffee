@@ -15,16 +15,16 @@ const getTerminalCols = () => {
 }
 
 class NeuralNetwork {
-	constructor(layerSizes, bitSize) {
+	constructor(layerSizes, itemBits) {
 		if (!Array.isArray(layerSizes)) throw new TypeError('Invalid input type. Expected Array.isArray(layerSizes), got !Array.isArray(layerSizes)');
 		if (layerSizes.length < 3) throw new RangeError(`Invalid array length. Expected layerSizes.length >= 3, got ${layerSizes.length}`);
-		if (!Number.isInteger(bitSize)) throw new TypeError('Invalid input type. Expected Number.isInteger(bitSize), got !Number.isInteger(bitSize)');
-		if (bitSize < 1) throw new RangeError(`Invalid integer value. Expected bitSize > 0, got ${bitSize}`);
+		if (!Number.isInteger(itemBits)) throw new TypeError('Invalid input type. Expected Number.isInteger(itemBits), got !Number.isInteger(itemBits)');
+		if (itemBits < 1) throw new RangeError(`Invalid integer value. Expected itemBits > 0, got ${itemBits}`);
 
 		this.layerSizes = layerSizes;
 		this.weights = [];
 		this.biases = [];
-		this.bitSize = bitSize;
+		this.itemBits = itemBits;
 
 		for (let i = 1; i < layerSizes.length; i++) {
 			const beforeLayerSize = layerSizes[i - 1];
@@ -62,14 +62,14 @@ class NeuralNetwork {
 		return Array.isArray(arr) && arr.length > 0 && arr.every(v => v === 0 || v === 1);
 	}
 
-	static stringToBin(str, bitSize) {
+	static stringToBin(str, itemBits) {
 		return str.split('').map(s =>
-			s.charCodeAt(0).toString(2).padStart(bitSize, '0').split('').map(Number)
+			s.charCodeAt(0).toString(2).padStart(itemBits, '0').split('').map(Number)
 		);
 	}
 
-	static numberToBin(num, bitSize) {
-		return num.toString(2).padStart(bitSize, '0').split('').map(Number);
+	static numberToBin(num, itemBits) {
+		return num.toString(2).padStart(itemBits, '0').split('').map(Number);
 	}
 
 	static binToNumber(bin) {
@@ -82,23 +82,25 @@ class NeuralNetwork {
 		).join('');
 	}
 
-	static toBin(input, bitSize, maxLength) {
+	static toBin(input, itemBits, maxLength) {
 		if (typeof input === 'string') {
 			let size = 0;
 			for (const char of input) {
-				size += char.charCodeAt(0).toString(2).length;
+				size += itemBits;
 			}
 			if (size > maxLength) throw new RangeError(`Invalid string length. Expected size <= ${maxLength}, got ${size}`);
 
-			return this.stringToBin(input.padEnd(maxLength / 8, '\0'), bitSize);
+			return this.stringToBin(input.padEnd(maxLength / itemBits, '\0'), itemBits);
 		}
-		if (typeof input === 'number') return this.numberToBin(input, bitSize);
-		if (Array.isArray(input)) return input;
+		if (typeof input === 'number') return [this.numberToBin(input, itemBits)];
+		if (Array.isArray(input)) return [input];
 
 		throw new TypeError(`Unsupported type: ${input}`);
 	}
 
 	#forward(input) {
+		if (input.length !== this.layerSizes[0]) throw new RangeError(`Invalid input length. Expected ${this.layerSizes[0]}, got ${input.length}`);
+
 		let previousLayerOutput = input;
 		let layersOutput = [input];
 
@@ -123,10 +125,14 @@ class NeuralNetwork {
 	}
 
 	predict(input, outputType = 0) {
-		input = input.flatMap(i => this.constructor.toBin(i, this.bitSize, this.layerSizes[0]).flat());
+		input = input.flatMap(i => this.constructor.toBin(i, this.itemBits, this.layerSizes[0]).flat());
 
 		if (!this.constructor.isBinaryArray(input)) throw new TypeError('Invalid input. Expected an array of 0/1 values.');
-		if (input.length !== this.layerSizes[0]) throw new RangeError(`Invalid array length. Expected input.length === ${this.layerSizes[0]}, got ${input.length}`);
+		if (input.length > this.layerSizes[0]) throw new RangeError(`Input too large. Expected <= ${this.layerSizes[0]} bits, got ${input.length}`);
+
+		while (input.length < this.layerSizes[0]) {
+			input.push(0);
+		}
 
 		input = input.map(v => (v === 0 ? -1 : 1));
 
@@ -150,8 +156,8 @@ class NeuralNetwork {
 
 		if (outputType === 'debug') return previousLayerOutput;
 		if (outputType === 'binary') return previousLayerOutput.map(v => (v > 0 ? 1 : 0));
-		if (outputType === 'number') return this.constructor.binToNumber(previousLayerOutput);
-		if (outputType === 'string') return this.constructor.binToString(this.constructor.chunk(previousLayerOutput.map(v => (v > 0 ? 1 : 0)), this.bitSize)).replace(/\0+$/, '');
+		if (outputType === 'number') return this.constructor.binToNumber(previousLayerOutput.map(v => (v > 0 ? 1 : 0)).slice(0, this.itemBits));
+		if (outputType === 'string') return this.constructor.binToString(this.constructor.chunk(previousLayerOutput.map(v => (v > 0 ? 1 : 0)), this.itemBits)).replace(/\0+$/, '');
 		throw new TypeError(`Unsupported output type:x ${outputType}`);
 	}
 
@@ -163,26 +169,33 @@ class NeuralNetwork {
 
 		for (let i = 0; i < data.length; i++) {
 			let { x, y } = data[i];
-			x = x.flatMap(item => this.constructor.toBin(item, this.bitSize, this.layerSizes[0]));
-			y = y.flatMap(item => this.constructor.toBin(item, this.bitSize, this.layerSizes.at(-1)));
+			x = x.flatMap(item => this.constructor.toBin(item, this.itemBits, this.layerSizes[0]));
+			y = y.flatMap(item => this.constructor.toBin(item, this.itemBits, this.layerSizes.at(-1)));
 
 			if (!Array.isArray(x) || !Array.isArray(y)) throw new TypeError('Invalid input type. Expected Array.isArray(x) and Array.isArray(y).');
 
 			for (const sub of x) {
 				if (!this.constructor.isBinaryArray(sub)) throw new TypeError('Invalid input. Expected every sub-array of x to be binary.');
-				if (sub.length !== this.bitSize) throw new RangeError(`Invalid array length. Expected sub.length === ${this.bitSize}, got ${sub.length}`);
+				if (sub.length !== this.itemBits) throw new RangeError(`Invalid array length. Expected sub.length === ${this.itemBits}, got ${sub.length}`);
 			}
 
 			for (const sub of y) {
 				if (!this.constructor.isBinaryArray(sub)) throw new TypeError('Invalid input. Expected every sub-array of y to be binary.');
-				if (sub.length !== this.bitSize) throw new RangeError(`Invalid array length. Expected sub.length === ${this.bitSize}, got ${sub.length}`);
+				if (sub.length !== this.itemBits) throw new RangeError(`Invalid array length. Expected sub.length === ${this.itemBits}, got ${sub.length}`);
 			}
 
+			const flatX = x.flat(), flatY = y.flat();
+			if (flatX.length > this.layerSizes[0]) throw new RangeError(`Input too large. Expected <= ${this.layerSizes[0]} bits, got ${flatX.length}`);
+			if (flatY.length > this.layerSizes.at(-1)) throw new RangeError(`Output too large. Expected <= ${this.layerSizes.at(-1)} bits, got ${flatY.length}`);
+
+			while (flatX.length < this.layerSizes[0]) flatX.push(0);
+			while (flatY.length < this.layerSizes.at(-1)) flatY.push(0);
+
 			flattenedData.push({
-				x: x.flat().map(v => (
+				x: flatX.map(v => (
 					v === 0 ? -1 : 1
 				)),
-				y: y.flat().map(v => (
+				y: flatY.map(v => (
 					v === 0 ? -1 : 1
 				))
 			});
@@ -200,6 +213,49 @@ class NeuralNetwork {
 
 		let startTime;
 		if (debug) startTime = Date.now();
+		let lastLogTime = 0;
+
+		const logProgress = async (i, totalError, errorCount) => {
+			const timeElapsed = (Date.now() - startTime) / 1000;
+			const itPerSec = (i + 1) / timeElapsed;
+
+			const logs = [
+				`training | i: ${i + 1}/${iteration === -1 ? '∞' : iteration} `+
+				`| err: ${totalError.toFixed(3)}/${errorCount} (${(totalError / errorCount).toFixed(3)}) ` +
+				`| ${timeElapsed}ms ${itPerSec.toFixed(3)}it/s`,
+
+				`i: ${i + 1}/${iteration === -1 ? '∞' : iteration}` +
+				`| err: ${totalError.toFixed(2)}/${errorCount} (${(totalError / errorCount).toFixed(2)}) ` +
+				`| ${timeElapsed}ms ${itPerSec.toFixed(2)}it/s`,
+
+				`i: ${i + 1}/${iteration === -1 ? '∞' : iteration}` +
+				`| err: ${totalError.toFixed(1)}/${errorCount} (${(totalError / errorCount).toFixed(1)}) ` +
+				`| ${timeElapsed / 1000}s ${itPerSec.toFixed(1)}it/s`,
+
+				`i: ${i + 1}/${iteration === -1 ? '∞' : iteration}` +
+				`| err: ${(totalError / errorCount).toFixed(2)} ` +
+				`| ${timeElapsed / 1000}s ${itPerSec.toFixed(1)}it/s`,
+
+				`${i + 1}/${iteration === -1 ? '∞' : iteration}` +
+				`| ${(totalError / errorCount).toFixed(1)} ` +
+				`| ${timeElapsed / 1000}s ${itPerSec.toFixed(0)}it/s`,
+
+				`${i + 1}/${iteration === -1 ? '∞' : iteration}` +
+				`| ${(totalError / errorCount).toFixed(1)} ` +
+				`| ${itPerSec.toFixed(0)}it/s`,
+
+				`${i + 1}/${iteration === -1 ? '∞' : iteration}` +
+				`| ${(totalError / errorCount).toFixed(1)}`,
+
+				`${(totalError / errorCount).toFixed(1)}`,
+			]
+
+			const cols = getTerminalCols();
+			const line = logs.find(c => c.length <= cols) ?? '';
+			process.stdout.write(`\r\x1b[K${line}`);
+
+			await new Promise(resolve => setImmediate(resolve));
+		};
 
 		for (let i = 0; iteration === -1 || i < iteration; i++) {
 			let totalError = 0;
@@ -254,46 +310,14 @@ class NeuralNetwork {
 
 					currentDeltas = newDeltas;
 				}
-			}
 
-			if (debug) {
-				const timeElapsed = (Date.now() - startTime) / 1000;
-				const itPerSec = (i + 1) / timeElapsed;
-
-				const logs = [
-					`training | i: ${i + 1}/${iteration === -1 ? '∞' : iteration} `+
-					`| err: ${totalError.toFixed(3)}/${errorCount} (${(totalError / errorCount).toFixed(3)}) ` +
-					`| ${timeElapsed}ms ${itPerSec.toFixed(3)}it/s`,
-
-					`i: ${i + 1}/${iteration === -1 ? '∞' : iteration}` +
-					`| err: ${totalError.toFixed(2)}/${errorCount} (${(totalError / errorCount).toFixed(2)}) ` +
-					`| ${timeElapsed}ms ${itPerSec.toFixed(2)}it/s`,
-
-					`i: ${i + 1}/${iteration === -1 ? '∞' : iteration}` +
-					`| err: ${totalError.toFixed(1)}/${errorCount} (${(totalError / errorCount).toFixed(1)}) ` +
-					`| ${timeElapsed / 1000}s ${itPerSec.toFixed(1)}it/s`,
-
-					`i: ${i + 1}/${iteration === -1 ? '∞' : iteration}` +
-					`| err: ${(totalError / errorCount).toFixed(2)} ` +
-					`| ${timeElapsed / 1000}s ${itPerSec.toFixed(1)}it/s`,
-
-					`${i + 1}/${iteration === -1 ? '∞' : iteration}` +
-					`| ${(totalError / errorCount).toFixed(1)} ` +
-					`| ${timeElapsed / 1000}s ${itPerSec.toFixed(0)}it/s`,
-
-					`${i + 1}/${iteration === -1 ? '∞' : iteration}` +
-					`| ${(totalError / errorCount).toFixed(1)} ` +
-					`| ${itPerSec.toFixed(0)}it/s`,
-
-					`${i + 1}/${iteration === -1 ? '∞' : iteration}` +
-					`| ${(totalError / errorCount).toFixed(1)}`,
-
-					`${(totalError / errorCount).toFixed(1)}`,
-				]
-
-				const cols = getTerminalCols();
-				const line = logs.find(c => c.length <= cols) ?? '';
-				process.stdout.write(`\r\x1b[K${line}`);
+				if (debug) {
+					const now = Date.now();
+					if (now - lastLogTime >= 100) {
+						lastLogTime = now;
+						await logProgress(i, totalError, errorCount);
+					}
+				}
 			}
 		}
 	}
