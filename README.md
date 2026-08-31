@@ -72,7 +72,3 @@ The goal is understanding, not perfection.
 > If you notice any issues, feel free to let me know.
 >
 > Some parts of this `README.md` were written with the help of **ChatGPT**.
-
-## End
-
-Thanks for reading, and have a great day!
