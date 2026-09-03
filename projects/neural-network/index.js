@@ -24,6 +24,8 @@ class NeuralNetwork {
 		this.layerSizes = layerSizes;
 		this.weights = [];
 		this.biases = [];
+		this.weightVelocity = [];
+		this.biasVelocity = [];
 		this.itemBits = itemBits;
 		this.stopRequested = false;
 
@@ -48,6 +50,8 @@ class NeuralNetwork {
 
 			this.biases.push(gapBiases);
 			this.weights.push(gapWeights);
+			this.biasVelocity.push(gapBiases.map(() => 0));
+			this.weightVelocity.push(gapWeights.map(g => g.map(() => 0)));
 		}
 	}
 
@@ -210,7 +214,7 @@ class NeuralNetwork {
 		this.stopRequested = true;
 	}
 
-	async train(iteration, learningRate = 0.05, debug = false) {
+	async train(iteration, learningRate = 0.05, momentum = 0.9, debug = false) {
 		if (!this.data) throw new Error('Cannot use train(). No data detected');
 		if (iteration < -1) throw new RangeError(`Invalid iteration. Expected i >= -1, got ${iteration}`);
 		if (debug != true && debug != false) throw new TypeError('Invalid input. Debug needs to be either == false or == true');
@@ -259,7 +263,7 @@ class NeuralNetwork {
 			]
 
 			const cols = getTerminalCols();
-			const line = logs.find(c => c.length <= cols) ?? '';
+			const line = cols === 0 ? logs[5] : (logs.find(c => c.length <= cols) ?? '');
 			process.stdout.write('\x1b[s\x1b[1A\x1b[G\x1b[K' + line + '\x1b[u');
 
 			await new Promise(resolve => setImmediate(resolve));
@@ -297,10 +301,12 @@ class NeuralNetwork {
 					deltas.push(delta);
 
 					for (let k = 0; k < this.weights[lastGapIndex][j].length; k++) {
-						this.weights[lastGapIndex][j][k] += delta * previousLayer[k] * learningRate;
+						this.weightVelocity[lastGapIndex][j][k] = momentum * this.weightVelocity[lastGapIndex][j][k] + delta * previousLayer[k] * learningRate;
+						this.weights[lastGapIndex][j][k] += this.weightVelocity[lastGapIndex][j][k];
 					}
 
-					this.biases[lastGapIndex][j] += delta * learningRate;
+					this.biasVelocity[lastGapIndex][j] = momentum * this.biasVelocity[lastGapIndex][j] + delta * learningRate;
+					this.biases[lastGapIndex][j] += this.biasVelocity[lastGapIndex][j];
 				}
 
 				let currentDeltas = deltas;
@@ -320,9 +326,11 @@ class NeuralNetwork {
 
 						const inputLayer = layersOutput[gapIndex];
 						for (let q = 0; q < this.weights[gapIndex][j].length; q++) {
-							this.weights[gapIndex][j][q] += delta * inputLayer[q] * learningRate;
+							this.weightVelocity[gapIndex][j][q] = momentum * this.weightVelocity[gapIndex][j][q] + delta * inputLayer[q] * learningRate;
+							this.weights[gapIndex][j][q] += this.weightVelocity[gapIndex][j][q];
 						}
-						this.biases[gapIndex][j] += delta * learningRate;
+						this.biasVelocity[gapIndex][j] = momentum * this.biasVelocity[gapIndex][j] + delta * learningRate;
+						this.biases[gapIndex][j] += this.biasVelocity[gapIndex][j];
 					}
 
 					currentDeltas = newDeltas;

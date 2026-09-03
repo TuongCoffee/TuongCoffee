@@ -49,11 +49,11 @@ Currently, I mainly work with many languages (different languages at different t
 Current projects:
 | Project | Platform | Description | Status | Language |
 | --- | :---: | --- | :---: | :---: |
-| Message Creator | Web | A tool that generates HTML files simulating chat messages | Discontinued (may return) | HTML, CSS |
+| Message Creator | Web | A tool that generates HTML files simulating chat messages | Returning | HTML, CSS |
 | Date File Namer | CLI tool | A CLI tool for naming pictures or videos (files) by their date if you don't know what to name them | Shelved (may return) | Python |
 | Tiktok Data Reader | CLI tool | A CLI tool for reading Tiktok's data from your account | Shelved (may return) | Python |
 | Coffee Machine | Discord | My own discord bot for my server | Paused | Discord.js |
-| Neural Network | None | Just a neural network | Active | JavaScript |
+| Neural Network | None | Just a neural network | Done | JavaScript |
 
 ## Development Environment
 

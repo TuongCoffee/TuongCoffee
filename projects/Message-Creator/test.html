@@ -1,0 +1,99 @@
+<!doctype html>
+
+<html lang="vi">
+    <head>
+        <!-- getting font -->
+        <meta charset="UTF-8" />
+        <title>Chat test</title>
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+            rel="stylesheet"
+        />
+
+        <style>
+            body {
+                background-color: #111;
+                color: #fffafa;
+                font-family: "Roboto", sans-serif;
+            }
+
+            .chat-container {
+                display: flex;
+                flex-direction: column;
+                padding-inline: 6px;
+                gap: 5px;
+            }
+
+            chat-bubble {
+                display: block;
+                background-color: #222;
+                padding: 8px 12px;
+                margin: 2px 0;
+                min-height: 16px;
+                width: fit-content;
+                max-width: 80%;
+                border: 1px solid #444;
+                border-radius: 16px 16px 16px 4px;
+                white-space: pre-wrap;
+                overflow-wrap: break-word;
+                word-break: break-word;
+            }
+
+            chat-bubble[pos="right"] {
+                margin-left: auto;
+                border-radius: 16px 16px 4px 16px;
+                background: #2b6fff;
+                border-color: #4d91ff;
+            }
+
+            chat-bubble[pos="center"] {
+                max-width: 90%;
+                font-size: 14px;
+                color: #666;
+                margin: 8px auto;
+                border: none;
+                background: none;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="chat-container">
+            <!-- chat content goes here. -->
+            <chat-bubble>left</chat-bubble>
+            <chat-bubble pos="right">right</chat-bubble>
+            <chat-bubble pos="center">center</chat-bubble>
+            <chat-bubble>longggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg</chat-bubble>
+            <chat-bubble pos="right">longggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg</chat-bubble>
+            <chat-bubble pos="center">longggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg</chat-bubble>
+            <chat-bubble>down<br/>down<br/>down<br/>down</chat-bubble>
+            <chat-bubble pos="right">down<br/>down<br/>down<br/>down</chat-bubble>
+            <chat-bubble pos="center">down<br/>down<br/>down<br/>down</chat-bubble>
+            <chat-bubble>.............</chat-bubble>
+            <chat-bubble pos="right">.............</chat-bubble>
+            <chat-bubble pos="center">.............</chat-bubble>
+            <chat-bubble pos="center"></chat-bubble>
+            <chat-bubble pos="center">4:05:47pm 12/9/2025</chat-bubble>
+            <chat-bubble>Yo wassup!</chat-bubble>
+            <chat-bubble>Wanna hangout with me?</chat-bubble>
+            <chat-bubble pos="right">sure</chat-bubble>
+            <chat-bubble>Wait!</chat-bubble>
+            <chat-bubble pos="right">what</chat-bubble>
+            <chat-bubble>Acctually.. I just wanted to say smth</chat-bubble>
+            <chat-bubble pos="right">what is it</chat-bubble>
+            <chat-bubble>I.. I..</chat-bubble>
+            <chat-bubble>I love you</chat-bubble>
+            <chat-bubble pos="right">...</chat-bubble>
+            <chat-bubble>Do you accept me?</chat-bubble>
+            <chat-bubble pos="right">sure</chat-bubble>
+        </div>
+
+        <script>
+            class ChatBubble extends HTMLElement {}
+            customElements.define("chat-bubble", ChatBubble);
+        </script>
+    </body>
+</html>
