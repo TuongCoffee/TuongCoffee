@@ -1,0 +1,135 @@
+<!doctype html>
+
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Chat test</title>
+
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+			rel="stylesheet"
+		/>
+
+		<style>
+			body {
+				background-color: #111;
+				color: #fffafa;
+				font-family: "Roboto", sans-serif;
+			}
+
+			.chat-container {
+				display: flex;
+				flex-direction: column;
+				padding-inline: 6px;
+			}
+
+			chat-bubble {
+				display: block;
+				background-color: #2b6fff;
+				padding: 8px 10px;
+				margin: 3px 0;
+				margin-left: auto;
+				min-height: 16px;
+				width: fit-content;
+				max-width: 80%;
+				line-height: 20px;
+				border: 1px solid #4d91ff;
+				border-radius: 16px 14px 4px 16px;
+				white-space: pre-wrap;
+				overflow-wrap: break-word;
+				word-break: break-word;
+			}
+
+			chat-bubble[pos='left'] {
+				margin-left: 0;
+				margin-right: auto;
+				border-radius: 16px 16px 16px 4px;
+				background: #222;
+				border-color: #444;
+			}
+
+			chat-bubble[pos='left'] + chat-bubble[pos='left']:not(:has(+ chat-bubble[pos='left'])) {
+				border-radius: 4px 16px 16px 16px;
+			}
+
+			chat-bubble[pos='left'] + chat-bubble[pos='left']:has(+ chat-bubble[pos='left']) {
+				border-radius: 4px 16px 16px 4px;
+			}
+
+			chat-bubble[pos='center'] {
+				max-width: 90%;
+				font-size: 14px;
+				color: #666;
+				margin: 8px auto;
+				border: none;
+				background: none;
+			}
+
+			chat-bubble:not([pos]) + chat-bubble:not([pos]):has(+ chat-bubble:not([pos])) {
+				border-radius: 16px 4px 4px 16px;
+			}
+
+			chat-bubble:not([pos]) + chat-bubble:not([pos]):not(:has(+ chat-bubble:not([pos]))) {
+				border-radius: 16px 4px 16px 16px;
+			}
+
+			chat-bubble:empty::before {
+				content: "\00a0";
+			}
+
+			chat-bubble:not([pos]) + chat-bubble:not([pos]) {
+					margin-top: 0px;
+			}
+
+			chat-bubble[pos="left"] + chat-bubble[pos="left"] {
+					margin-top: 0px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="chat-container">
+			<chat-bubble>right</chat-bubble>
+			<chat-bubble pos="left">left</chat-bubble>
+			<chat-bubble pos="center">center</chat-bubble>
+			<chat-bubble>longggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg</chat-bubble>
+			<chat-bubble pos="left">longggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg</chat-bubble>
+			<chat-bubble pos="center">longggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg</chat-bubble>
+			<chat-bubble>down<br/>down<br/>down<br/>down</chat-bubble>
+			<chat-bubble pos="left">down<br/>down<br/>down<br/>down</chat-bubble>
+			<chat-bubble pos="center">down<br/>down<br/>down<br/>down</chat-bubble>
+			<chat-bubble>yo</chat-bubble>
+			<chat-bubble>yo</chat-bubble>
+			<chat-bubble>yo</chat-bubble>
+			<chat-bubble pos="left">yo</chat-bubble>
+			<chat-bubble pos="left">yo</chat-bubble>
+			<chat-bubble pos="left">yo</chat-bubble>
+			<chat-bubble>....................................................</chat-bubble>
+			<chat-bubble pos="left">....................................................</chat-bubble>
+			<chat-bubble pos="center">....................................................</chat-bubble>
+			<chat-bubble></chat-bubble>
+			<chat-bubble pos="left"></chat-bubble>
+			<chat-bubble pos="center"></chat-bubble>
+			<chat-bubble pos="center">4:05pm 12/9/2025</chat-bubble>
+			<chat-bubble>yo im making this by myself</chat-bubble>
+			<chat-bubble pos="left">thats awesome</chat-bubble>
+			<chat-bubble>ima making this into a web that can generate this file!</chat-bubble>
+			<chat-bubble>thats neat right</chat-bubble>
+			<chat-bubble pos="left">truest true absolutely mega omega ultra spuerultra infinitely super duper best really actual truest true dude</chat-bubble>
+			<chat-bubble pos="left">trueeeeeee so much true</chat-bubble>
+			<chat-bubble pos="left">nah bro i swear this is soooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo good damn</chat-bubble>
+			<chat-bubble pos="left">nyo i think i tweaked out</chat-bubble>
+			<chat-bubble>yo you CAN calm down now</chat-bubble>
+			<chat-bubble pos="left">skobidoo</chat-bubble>
+		</div>
+
+		<script>
+			class ChatBubble extends HTMLElement {}
+			customElements.define('chat-bubble', ChatBubble);
+		</script>
+	</body>
+</html>
+
