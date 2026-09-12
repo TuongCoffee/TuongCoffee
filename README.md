@@ -46,7 +46,7 @@ current projects:
 | project | platform | description | status | language |
 | --- | :---: | --- | :---: | :---: |
 | Message Creator | web | a tool that generates HTML files simulating chat messages | scraped | HTML, CSS |
-| Date File Namer | CLI tool | a CLI tool for naming pictures or videos (files) by their date if you dont know what to name them | shelved (may return) | Python |
+| Date File Namer | CLI tool | a CLI tool for naming pictures or videos (files) by their date if you dont know what to name them | returning | Python |
 | Tiktok Data Reader | CLI tool | a CLI tool for reading Tiktok's data from your account | shelved (may return) | Python |
 | Coffee Machine | Discord | my own discord bot for my server | paused | Discord.js |
 | Neural Network | none | just a neural network. good code. bad result | done | JavaScript |
