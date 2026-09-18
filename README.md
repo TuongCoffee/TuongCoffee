@@ -55,7 +55,7 @@ current projects:
 
 ## development environment
 
-terminal: Termux (Android)  
+terminal: Tmux (inside Termux) (Android)  
 code editor: NVim (NeoVim) + Nano  
 device: Samsung Galaxy A11 *(no cap)*
 
