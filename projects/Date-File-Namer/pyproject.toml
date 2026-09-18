@@ -1,0 +1,11 @@
+[project]
+name='datnmr'
+version='0.1.0'
+
+[project.scripts]
+datnmr='datnmr:main'
+
+[build-system]
+requires=['hatchling']
+build-backend='hatchling.build'
+

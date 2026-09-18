@@ -42,14 +42,16 @@ i paused my learning a few times (each time was about half a year)
 currently, i mainly work with many languages (different languages at different time based on my own like)  
 these are all the languages ive studied and worked on: HTML, CSS, JavaScript, TypeScript, Lua, Luau, C++, Python
 
+current status: learning C
+
 current projects:
 | project | platform | description | status | language |
 | --- | :---: | --- | :---: | :---: |
 | Message Creator | web | a tool that generates HTML files simulating chat messages | scraped | HTML, CSS |
-| Date File Namer | CLI tool | a CLI tool for naming pictures or videos (files) by their date if you dont know what to name them | returning | Python |
+| Date File Namer | CLI tool | a CLI tool for naming pictures or videos (files) by their date if you dont know what to name them | paused | Python |
 | Tiktok Data Reader | CLI tool | a CLI tool for reading Tiktok's data from your account | shelved (may return) | Python |
 | Coffee Machine | Discord | my own discord bot for my server | paused | Discord.js |
-| Neural Network | none | just a neural network. good code. bad result | done | JavaScript |
+| Neural Network | done | just a neural network. good code. bad result | done | JavaScript |
 
 ## development environment
 
